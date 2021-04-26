@@ -1,11 +1,17 @@
+SOURCE = ./kwebmon
+
 .PHONY: coverage
 coverage: ## Show tests coverage
-	pipenv run coverage run --source=./kwebmon -m unittest discover -s tests
+	pipenv run coverage run --source=$(SOURCE) -m unittest discover -s tests
 	pipenv run coverage report -m
 
 .PHONY: tests
 tests: ## Run tests
 	pipenv run python -m unittest discover -s tests
+
+.PHONY: lint
+lint: ## Run the linter
+	pipenv run flake8 $(SOURCE)
 
 .PHONY: init
 init: ## Initialize dev environment

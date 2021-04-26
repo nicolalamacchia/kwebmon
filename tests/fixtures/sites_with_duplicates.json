@@ -1,0 +1,27 @@
+{
+  "sites": [
+    {
+      "url": "https://example.net",
+      "pattern": "Example D\\w+n"
+    },
+    {
+      "url": "https://example.xorg",
+      "pattern": "Bad Domain"
+    },
+    {
+      "url": "https://example.org/404",
+      "pattern": "Bad Page"
+    },
+    {
+      "url": "https://example.org",
+      "pattern": "Bad Content"
+    },
+    {
+      "url": "https://example.org",
+      "pattern": "Example Domain"
+    },
+    {
+      "url": "https://example.com"
+    }
+  ]
+}

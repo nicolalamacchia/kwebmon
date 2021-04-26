@@ -1,0 +1,27 @@
+{
+  "sites": [
+    {
+      "url": "http://127.0.0.1:8080",
+      "pattern": "Example D\\w+n"
+    },
+    {
+      "url": "http://bad_domain.shouldnotexist",
+      "pattern": "Bad Domain"
+    },
+    {
+      "url": "http://127.0.0.1:8080/404",
+      "pattern": "Bad Page"
+    },
+    {
+      "url": "http://127.0.0.1:8080/bad_content",
+      "pattern": "Bad Content"
+    },
+    {
+      "url": "http://127.0.0.1:8080/?q=test",
+      "pattern": "Example Domain"
+    },
+    {
+      "url": "http://127.0.0.1:8080/?query"
+    }
+  ]
+}

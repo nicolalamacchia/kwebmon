@@ -22,7 +22,7 @@ jobs:
           pipenv install --dev
       - name: Lint with flake8
         run: |
-          flake8 ./kwebmon
+          make lint
       - name: Run unit tests
         run: |
           make tests

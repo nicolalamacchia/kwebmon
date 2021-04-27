@@ -23,7 +23,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pipenv-
       - name: Install dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
         run: |
           make init
       - name: Lint with flake8

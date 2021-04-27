@@ -28,7 +28,7 @@ class Producer:
         self._topic = topic
 
     def __del__(self):
-        if self._kafka_producer:
+        if hasattr(self, "_kafka_producer"):
             self.close()
 
     def send(self, key: dict, value: dict) -> None:

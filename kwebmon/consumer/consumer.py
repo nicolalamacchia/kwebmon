@@ -44,7 +44,7 @@ class Consumer:
         )
 
     def __del__(self):
-        if self._kafka_consumer:
+        if hasattr(self, "_kafka_consumer"):
             self.close()
 
     def listen(self, callback: Callable[[dict, dict], Any]) -> None:

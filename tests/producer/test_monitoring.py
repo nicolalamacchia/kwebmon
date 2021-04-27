@@ -7,7 +7,7 @@ from aiohttp.test_utils import AioHTTPTestCase, unittest_run_loop, TestServer
 from kwebmon.producer.utils import get_sites
 from kwebmon.producer.monitoring import Monitor
 
-from tests import fixture_path
+from tests.producer import fixture_path
 
 sites = get_sites(fixture_path("sites_localhost.json"))
 mock_cb = Mock()

@@ -1,7 +1,7 @@
 import unittest
 
 from kwebmon.producer.utils import get_sites, BadSitesList
-from tests import fixture_path
+from tests.producer import fixture_path
 
 
 class TestUtils(unittest.TestCase):

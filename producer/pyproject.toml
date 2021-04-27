@@ -1,0 +1,22 @@
+name = "kwebmon_producer"
+version = "0.1.0"
+description = "A simple web service monitor based on Kafka and PostgreSQL."
+authors = [
+    "Nicola Lamacchia <git@nicola.dev>"
+]
+license = "MIT"
+readme = "README.md"
+python = "^3.9"
+homepage = "https://github.com/nicolalamacchia/kwebmon"
+repository = "https://github.com/nicolalamacchia/kwebmon"
+documentation = "https://github.com/nicolalamacchia/kwebmon"
+
+keywords = ["web", "website", "monitoring", "observability"]
+
+classifiers = [
+    "Topic :: System :: Networking",
+    "Topic :: System :: Networking :: Monitoring"
+]
+
+[tool.black]
+line-length = 79

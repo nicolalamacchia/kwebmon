@@ -1,11 +1,11 @@
 import unittest
 from unittest.mock import patch, Mock, MagicMock
 
-from kwebmon.consumer.consumer import Consumer, InvalidMessageReceivedError
+from kwebmon_consumer.consumer import Consumer, InvalidMessageReceivedError
 
 
 class TestConsumer(unittest.TestCase):
-    @patch("kwebmon.consumer.consumer.KafkaConsumer")
+    @patch("kwebmon_consumer.consumer.KafkaConsumer")
     def test_consumer_invalid_value(self, consumer_mock):
         consumer_mock.return_value = [
             MagicMock(
@@ -33,7 +33,7 @@ class TestConsumer(unittest.TestCase):
             ):
             consumer.listen(mock)
 
-    @patch("kwebmon.consumer.consumer.KafkaConsumer")
+    @patch("kwebmon_consumer.consumer.KafkaConsumer")
     def test_consumer_invalid_key(self, consumer_mock):
         consumer_mock.return_value=[
             MagicMock(
@@ -61,7 +61,7 @@ class TestConsumer(unittest.TestCase):
             ):
             consumer.listen(mock)
 
-    @patch("kwebmon.consumer.consumer.KafkaConsumer")
+    @patch("kwebmon_consumer.consumer.KafkaConsumer")
     def test_consumer_valid_message(self, consumer_mock):
         consumer_mock.return_value=[
             MagicMock(

@@ -1,10 +1,6 @@
-"""
-kwebmon - a simple websites monitor based on Kafka and PostgreSQL.
-"""
-
 import logging
 
-logger = logging.getLogger("kwebmon")
+logger = logging.getLogger("kwebmon-consumer")
 logger.setLevel(logging.DEBUG)
 
 _console_handler = logging.StreamHandler()

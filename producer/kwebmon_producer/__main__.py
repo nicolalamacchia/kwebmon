@@ -3,14 +3,14 @@ import asyncio
 import logging
 import sys
 
-from kwebmon.producer.producer import Producer
-from kwebmon.producer.monitoring import Monitor
-from kwebmon.producer.utils import get_sites
+from kwebmon_producer.producer import Producer
+from kwebmon_producer.monitoring import Monitor
+from kwebmon_producer.utils import get_sites
 
 DEFAULT_KAFKA_TOPIC = "kwebmon"
 DEFAULT_CHECK_INTERVAL = 5
 
-logger = logging.getLogger("kwebmon.producer")
+logger = logging.getLogger("kwebmon-producer")
 
 
 def parse_args(args=sys.argv[1:]):

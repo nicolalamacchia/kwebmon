@@ -5,7 +5,7 @@ from typing import Optional
 
 import jsonschema
 
-from kwebmon.producer.json_schemas import SITES_JSON_SCHEMA
+from kwebmon_producer.json_schemas import SITES_JSON_SCHEMA
 
 
 class BadSitesList(Exception):

@@ -1,25 +1,22 @@
-CONSUMER = consumer
-PRODUCER = producer
+SOURCE = ./kwebmon_consumer
 
 .PHONY: coverage
 coverage: ## Show tests coverage
-	make -C $(CONSUMER) coverage
-	make -C $(PRODUCER) coverage
+	pipenv run coverage run --source=$(SOURCE) -m unittest discover -s tests
+	pipenv run coverage report -m
 
 .PHONY: tests
 tests: ## Run tests
-	make -C $(CONSUMER) tests
-	make -C $(PRODUCER) tests
+	pipenv run python -m unittest discover -s tests
 
 .PHONY: lint
 lint: ## Run the linter
-	make -C $(CONSUMER) lint
-	make -C $(PRODUCER) lint
+	pipenv run flake8 $(SOURCE)
 
 .PHONY: init
 init: ## Initialize dev environment
-	make -C $(CONSUMER) init
-	make -C $(PRODUCER) init
+	pip install pipenv
+	pipenv install --dev
 
 .PHONY: help
 help: ## Display this help

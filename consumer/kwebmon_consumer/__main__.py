@@ -2,14 +2,14 @@ import argparse
 import logging
 import sys
 
-from kwebmon.consumer.consumer import Consumer, InvalidMessageReceivedError
-from kwebmon.consumer.storage import PostgresStorage
+from kwebmon_consumer.consumer import Consumer, InvalidMessageReceivedError
+from kwebmon_consumer.storage import PostgresStorage
 
 DEFAULT_KAFKA_TOPIC = "kwebmon"
 DEFAULT_KAFKA_GROUP_ID = "kwebmon-consumer"
 DEFAULT_POSTGRES_TABLE_NAME = "kwebmon_metrics"
 
-logger = logging.getLogger("kwebmon.consumer")
+logger = logging.getLogger("kwebmon-consumer")
 
 
 def parse_args(args=sys.argv[1:]):

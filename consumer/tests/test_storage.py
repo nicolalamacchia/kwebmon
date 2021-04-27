@@ -1,15 +1,15 @@
 import unittest
 from unittest.mock import patch, Mock
 
-from kwebmon.consumer.storage import (
+from kwebmon_consumer.storage import (
     PostgresStorage,
     CREATE_TABLE_QUERY_FMT,
-    INSERT_QUERY_FMT,
+    INSERT_QUERY_FMT
 )
 
 
 class TestStorage(unittest.TestCase):
-    @patch("kwebmon.consumer.storage.psycopg2.connect")
+    @patch("kwebmon_consumer.storage.psycopg2.connect")
     def test_storage_db_connection(self, connect_mock):
         test_uri = "http://test:8000"
         storage = PostgresStorage(test_uri, "test_table")
@@ -18,7 +18,7 @@ class TestStorage(unittest.TestCase):
         connect_mock.assert_called_once()
         connect_mock.assert_called_with(test_uri)
 
-    @patch("kwebmon.consumer.storage.psycopg2.connect")
+    @patch("kwebmon_consumer.storage.psycopg2.connect")
     def test_storage_create_table(self, connect_mock):
         test_uri = "http://test:8000"
         test_table = "test_table"
@@ -31,7 +31,7 @@ class TestStorage(unittest.TestCase):
             CREATE_TABLE_QUERY_FMT.format(test_table)
         )
 
-    @patch("kwebmon.consumer.storage.psycopg2.connect")
+    @patch("kwebmon_consumer.storage.psycopg2.connect")
     def test_storage_insert_data(self, connect_mock):
         test_uri = "http://test:8000"
         test_table = "test_table"

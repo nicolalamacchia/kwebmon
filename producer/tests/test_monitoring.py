@@ -4,10 +4,10 @@ from unittest.mock import Mock
 from aiohttp import web
 from aiohttp.test_utils import AioHTTPTestCase, unittest_run_loop, TestServer
 
-from kwebmon.producer.utils import get_sites
-from kwebmon.producer.monitoring import Monitor
+from kwebmon_producer.utils import get_sites
+from kwebmon_producer.monitoring import Monitor
 
-from tests.producer import fixture_path
+from tests import fixture_path
 
 sites = get_sites(fixture_path("sites_localhost.json"))
 mock_cb = Mock()

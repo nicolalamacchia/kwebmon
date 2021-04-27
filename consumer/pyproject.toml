@@ -1,4 +1,4 @@
-name = "kwebmon"
+name = "kwebmon_consumer"
 version = "0.1.0"
 description = "A simple web service monitor based on Kafka and PostgreSQL."
 authors = [

@@ -1,10 +1,10 @@
 import unittest
 from unittest.mock import patch
 
-from kwebmon.producer.producer import Producer
+from kwebmon_producer.producer import Producer
 
 
-@patch("kwebmon.producer.producer.KafkaProducer")
+@patch("kwebmon_producer.producer.KafkaProducer")
 class TestProducer(unittest.TestCase):
     def test_producer_send_message(self, mock_kafka_producer):
         producer = Producer(

@@ -4,7 +4,7 @@ from typing import Callable, Any
 import jsonschema
 from kafka import KafkaConsumer
 
-from kwebmon.consumer.json_schemas import (
+from .json_schemas import (
     MESSAGE_KEY_SCHEMA,
     MESSAGE_VALUE_SCHEMA,
 )

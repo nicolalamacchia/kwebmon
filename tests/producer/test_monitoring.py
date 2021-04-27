@@ -4,7 +4,7 @@ from unittest.mock import Mock
 from aiohttp import web
 from aiohttp.test_utils import AioHTTPTestCase, unittest_run_loop, TestServer
 
-from kwebmon.producer.__main__ import get_sites
+from kwebmon.producer.utils import get_sites
 from kwebmon.producer.monitoring import Monitor
 
 from tests import fixture_path
@@ -35,7 +35,7 @@ class TestMonitoring(AioHTTPTestCase):
     @staticmethod
     async def get_server(app):
         return TestServer(app, scheme="http", host="127.0.0.1", port=8080)
-    
+
     @unittest_run_loop
     async def test_check(self):
         await monitor.check()
@@ -61,25 +61,29 @@ class TestMonitoring(AioHTTPTestCase):
         self.assertEqual(calls[1].args[1]["status_code"], 404)
         self.assertEqual(len(calls[1].args[1]), 3)
 
-        self.assertEqual(calls[2].args[0]["url"],
-                         "http://127.0.0.1:8080/bad_content")
+        self.assertEqual(
+            calls[2].args[0]["url"], "http://127.0.0.1:8080/bad_content"
+        )
         self.assertEqual(calls[2].args[1]["is_content_valid"], False)
         self.assertEqual(calls[2].args[1]["status_code"], 200)
         self.assertEqual(len(calls[2].args[1]), 4)
 
-        self.assertEqual(calls[3].args[0]["url"],
-                         "http://127.0.0.1:8080/?q=test")
+        self.assertEqual(
+            calls[3].args[0]["url"], "http://127.0.0.1:8080/?q=test"
+        )
         self.assertEqual(calls[3].args[1]["is_content_valid"], True)
         self.assertEqual(len(calls[3].args[1]), 4)
 
-        self.assertEqual(calls[4].args[0]["url"],
-                         "http://127.0.0.1:8080/?query")
+        self.assertEqual(
+            calls[4].args[0]["url"], "http://127.0.0.1:8080/?query"
+        )
         self.assertIsInstance(calls[4].args[1]["response_time"], float)
         self.assertEqual(calls[4].args[1]["status_code"], 200)
         self.assertEqual(len(calls[4].args[1]), 3)
 
-        self.assertEqual(calls[5].args[0]["url"],
-                         "http://bad_domain.shouldnotexist")
+        self.assertEqual(
+            calls[5].args[0]["url"], "http://bad_domain.shouldnotexist"
+        )
         self.assertEqual(calls[5].args[1]["error"], "Invalid domain")
         self.assertEqual(len(calls[5].args[1]), 2)
 

@@ -28,7 +28,8 @@ class Producer:
         self._topic = topic
 
     def __del__(self):
-        self.close()
+        if self._kafka_producer:
+            self.close()
 
     def send(self, key: dict, value: dict) -> None:
         """

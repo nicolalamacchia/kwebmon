@@ -6,7 +6,7 @@ from kafka import KafkaConsumer
 
 from kwebmon.consumer.json_schemas import (
     MESSAGE_KEY_SCHEMA,
-    MESSAGE_VALUE_SCHEMA
+    MESSAGE_VALUE_SCHEMA,
 )
 
 
@@ -40,11 +40,12 @@ class Consumer:
             ssl_cafile=cafile,
             ssl_certfile=certfile,
             ssl_keyfile=keyfile,
-            group_id=group_id
+            group_id=group_id,
         )
 
     def __del__(self):
-        self.close()
+        if self._kafka_consumer:
+            self.close()
 
     def listen(self, callback: Callable[[dict, dict], Any]) -> None:
         """
@@ -56,12 +57,9 @@ class Consumer:
 
             try:
                 jsonschema.validate(
-                    instance=message_key,
-                    schema=MESSAGE_KEY_SCHEMA
+                    instance=message_key, schema=MESSAGE_KEY_SCHEMA
                 )
-            except (
-                jsonschema.ValidationError
-            ) as validation_error:
+            except (jsonschema.ValidationError) as validation_error:
                 raise InvalidMessageReceivedError(
                     f"An invalid message key has been received: {message_key}"
                 ) from validation_error
@@ -69,12 +67,9 @@ class Consumer:
             try:
 
                 jsonschema.validate(
-                    instance=message_value,
-                    schema=MESSAGE_VALUE_SCHEMA
+                    instance=message_value, schema=MESSAGE_VALUE_SCHEMA
                 )
-            except (
-                jsonschema.ValidationError
-            ) as validation_error:
+            except (jsonschema.ValidationError) as validation_error:
                 raise InvalidMessageReceivedError(
                     "An invalid message value has been received: "
                     f"{message_value}"

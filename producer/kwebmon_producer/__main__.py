@@ -1,39 +1,79 @@
 import argparse
 import asyncio
 import logging
+import os
 import sys
 
 from kwebmon_producer.producer import Producer
 from kwebmon_producer.monitoring import Monitor
 from kwebmon_producer.utils import get_sites
 
-DEFAULT_KAFKA_TOPIC = "kwebmon"
 DEFAULT_CHECK_INTERVAL = 5
+
+DEFAULT_KAFKA_CA = "kafka-ca.pem"
+DEFAULT_KAFKA_CERT = "kafka-service.cert"
+DEFAULT_KAFKA_KEY = "kafka-service.key"
+DEFAULT_KAFKA_TOPIC = "kwebmon"
+
+KAFKA_CA_ENV_VAR = "KWEBMON_KAFKA_CA"
+KAFKA_CERT_ENV_VAR = "KWEBMON_KAFKA_CERT"
+KAFKA_KEY_ENV_VAR = "KWEBMON_KAFKA_KEY"
+KAFKA_URI_ENV_VAR = "KWEBMON_KAFKA_URI"
+
+kafka_ca = os.environ.get(KAFKA_CA_ENV_VAR, DEFAULT_KAFKA_CA)
+kafka_cert = os.environ.get(KAFKA_CERT_ENV_VAR, DEFAULT_KAFKA_CERT)
+kafka_key = os.environ.get(KAFKA_KEY_ENV_VAR, DEFAULT_KAFKA_KEY)
+
+kafka_uri = os.environ.get(KAFKA_URI_ENV_VAR)
 
 logger = logging.getLogger("kwebmon-producer")
 
 
 def parse_args(args=sys.argv[1:]):
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(
+        prog="kwebmon_producer",
+        description=("Monitors the websites in the specified configuration "
+                     "and sends metrics to a Kafka topic."),
+        epilog=(
+            "NOTE: Some arguments are required if the respective environment "
+            "variable is not defined."
+        )
+    )
     parser.add_argument(
         "--kafka-uri",
-        required=True,
-        help="Kafka service URI",
+        default=kafka_uri,
+        help=(
+            "Kafka service URI. "
+            f"Required if the environment variable {KAFKA_URI_ENV_VAR} "
+            "is not defined."
+        )
     )
     parser.add_argument(
         "--kafka-ca",
-        required=True,
-        help=("CA file path for the Kafka service"),
+        default=kafka_ca,
+        help=(
+            "CA file path for the Kafka service. "
+            f"Overrides the environment variable {KAFKA_CA_ENV_VAR} "
+            f"(default: {DEFAULT_KAFKA_CA})."
+        ),
     )
     parser.add_argument(
         "--kafka-cert",
-        required=True,
-        help="Certificate file path for the Kafka service",
+        default=kafka_cert,
+        help=(
+            "Certificate file path for the Kafka service. "
+            f"Overrides the environment variable {KAFKA_CERT_ENV_VAR} "
+            f"(default: {DEFAULT_KAFKA_CERT})."
+        )
     )
     parser.add_argument(
         "--kafka-key",
-        required=True,
-        help="Key file path for the Kafka service",
+        default=kafka_key,
+        help=(
+            "Key file path for the Kafka service. "
+            f"Overrides the environment variable {KAFKA_KEY_ENV_VAR} "
+            f"(default: {DEFAULT_KAFKA_KEY})."
+        )
     )
     parser.add_argument(
         "--kafka-topic",
@@ -53,7 +93,15 @@ def parse_args(args=sys.argv[1:]):
         required=True,
         help="Configuration file (JSON) with a list of websites to monitor",
     )
-    return parser.parse_args(args)
+    parsed_args = parser.parse_args(args)
+
+    if parsed_args.kafka_uri is None:
+        parser.error(
+            "--kafka-uri is required if the environment variable "
+            f"{KAFKA_URI_ENV_VAR} is not defined."
+        )
+
+    return parsed_args
 
 
 def main():

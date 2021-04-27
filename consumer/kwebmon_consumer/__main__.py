@@ -1,61 +1,122 @@
 import argparse
 import logging
+import os
 import sys
 
 from kwebmon_consumer.consumer import Consumer, InvalidMessageReceivedError
 from kwebmon_consumer.storage import PostgresStorage
 
+DEFAULT_KAFKA_CA = "kafka-ca.pem"
+DEFAULT_KAFKA_CERT = "kafka-service.cert"
+DEFAULT_KAFKA_KEY = "kafka-service.key"
 DEFAULT_KAFKA_TOPIC = "kwebmon"
 DEFAULT_KAFKA_GROUP_ID = "kwebmon-consumer"
 DEFAULT_POSTGRES_TABLE_NAME = "kwebmon_metrics"
+
+KAFKA_CA_ENV_VAR = "KWEBMON_KAFKA_CA"
+KAFKA_CERT_ENV_VAR = "KWEBMON_KAFKA_CERT"
+KAFKA_KEY_ENV_VAR = "KWEBMON_KAFKA_KEY"
+KAFKA_URI_ENV_VAR = "KWEBMON_KAFKA_URI"
+POSTGRES_URI_ENV_VAR = "WEBMON_POSTGRES_URI"
+
+kafka_ca = os.environ.get(KAFKA_CA_ENV_VAR, DEFAULT_KAFKA_CA)
+kafka_cert = os.environ.get(KAFKA_CERT_ENV_VAR, DEFAULT_KAFKA_CERT)
+kafka_key = os.environ.get(KAFKA_KEY_ENV_VAR, DEFAULT_KAFKA_KEY)
+
+kafka_uri = os.environ.get(KAFKA_URI_ENV_VAR)
+postgres_uri = os.environ.get(POSTGRES_URI_ENV_VAR)
 
 logger = logging.getLogger("kwebmon-consumer")
 
 
 def parse_args(args=sys.argv[1:]):
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(
+        prog="kwebmon_consumer",
+        description=("Receives Kafka messages "
+                     "and stores them into a PostgreSQL database."),
+        epilog=(
+            "NOTE: Some arguments are required if the respective environment "
+            "variable is not defined."
+        )
+    )
     parser.add_argument(
         "--postgres-uri",
-        required=True,
-        help="PostgreSQL service URI"
+        default=postgres_uri,
+        help=(
+            "PostgreSQL service URI."
+            f"Required if the environment variable {POSTGRES_URI_ENV_VAR} "
+            "is not defined."
+        )
     )
     parser.add_argument(
         "--postgres-table-name",
         default=DEFAULT_POSTGRES_TABLE_NAME,
         help=("PostgreSQL table name to store consumed messages to "
-              f"(default: {DEFAULT_POSTGRES_TABLE_NAME})")
+              f"(default: {DEFAULT_POSTGRES_TABLE_NAME}).")
     )
     parser.add_argument(
         "--kafka-uri",
-        required=True,
-        help="Kafka service URI",
+        default=kafka_uri,
+        help=(
+            "Kafka service URI. "
+            f"Required if the environment variable {KAFKA_URI_ENV_VAR} "
+            "is not defined."
+        )
     )
     parser.add_argument(
         "--kafka-ca",
-        required=True,
-        help=("CA file path for the Kafka service"),
+        default=kafka_ca,
+        help=(
+            "CA file path for the Kafka service. "
+            f"Overrides the environment variable {KAFKA_CA_ENV_VAR} "
+            f"(default: {DEFAULT_KAFKA_CA})."
+        ),
     )
     parser.add_argument(
         "--kafka-cert",
-        required=True,
-        help="Certificate file path for the Kafka service",
+        default=kafka_cert,
+        help=(
+            "Certificate file path for the Kafka service. "
+            f"Overrides the environment variable {KAFKA_CERT_ENV_VAR} "
+            f"(default: {DEFAULT_KAFKA_CERT})."
+        )
     )
     parser.add_argument(
         "--kafka-key",
-        required=True,
-        help="Key file path for the Kafka service",
+        default=kafka_key,
+        help=(
+            "Key file path for the Kafka service. "
+            f"Overrides the environment variable {KAFKA_KEY_ENV_VAR} "
+            f"(default: {DEFAULT_KAFKA_KEY})."
+        )
     )
     parser.add_argument(
         "--kafka-topic",
         default=DEFAULT_KAFKA_TOPIC,
-        help=f"Kafka topic to send events to (default: {DEFAULT_KAFKA_TOPIC})",
+        help=(
+            f"Kafka topic to send events to (default: {DEFAULT_KAFKA_TOPIC})."
+        )
     )
     parser.add_argument(
         "--kafka-group-id",
         default=DEFAULT_KAFKA_GROUP_ID,
-        help=f"Kafka consumer group id (default: {DEFAULT_KAFKA_GROUP_ID})",
+        help=f"Kafka consumer group id (default: {DEFAULT_KAFKA_GROUP_ID}).",
     )
-    return parser.parse_args(args)
+    parsed_args = parser.parse_args(args)
+
+    if parsed_args.postgres_uri is None:
+        parser.error(
+            "--postgres-uri is required if the environment variable "
+            f"{POSTGRES_URI_ENV_VAR} is not defined."
+        )
+
+    if parsed_args.kafka_uri is None:
+        parser.error(
+            "--kafka-uri is required if the environment variable "
+            f"{KAFKA_URI_ENV_VAR} is not defined."
+        )
+
+    return parsed_args
 
 
 def main():

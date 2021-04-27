@@ -1,17 +1,18 @@
 import unittest
-from unittest.mock import patch, Mock, MagicMock
+from unittest.mock import patch, Mock
 
-from kwebmon.consumer.storage import PostgresStorage, CREATE_TABLE_QUERY_FMT, INSERT_QUERY_FMT
+from kwebmon.consumer.storage import (
+    PostgresStorage,
+    CREATE_TABLE_QUERY_FMT,
+    INSERT_QUERY_FMT,
+)
 
 
 class TestStorage(unittest.TestCase):
     @patch("kwebmon.consumer.storage.psycopg2.connect")
     def test_storage_db_connection(self, connect_mock):
         test_uri = "http://test:8000"
-        storage = PostgresStorage(
-            test_uri,
-            "test_table"
-        )
+        storage = PostgresStorage(test_uri, "test_table")
         storage.close = Mock()
 
         connect_mock.assert_called_once()
@@ -22,10 +23,7 @@ class TestStorage(unittest.TestCase):
         test_uri = "http://test:8000"
         test_table = "test_table"
 
-        storage = PostgresStorage(
-            test_uri,
-            test_table
-        )
+        storage = PostgresStorage(test_uri, test_table)
         storage.close = Mock()
 
         connect_mock().cursor().execute.assert_called_once()
@@ -38,10 +36,7 @@ class TestStorage(unittest.TestCase):
         test_uri = "http://test:8000"
         test_table = "test_table"
 
-        storage = PostgresStorage(
-            test_uri,
-            test_table
-        )
+        storage = PostgresStorage(test_uri, test_table)
         storage.close = Mock()
 
         test_data = {
@@ -51,7 +46,7 @@ class TestStorage(unittest.TestCase):
             "content_valid": None,
             "response_time": 3.14,
             "status_code": 200,
-            "error":  None,
+            "error": None,
         }
 
         storage.save(**test_data)
@@ -66,7 +61,7 @@ class TestStorage(unittest.TestCase):
                 test_data["response_time"],
                 test_data["status_code"],
                 test_data["error"],
-            )
+            ),
         )
 
 

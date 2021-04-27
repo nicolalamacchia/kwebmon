@@ -14,11 +14,13 @@ DEFAULT_KAFKA_CA = "kafka-ca.pem"
 DEFAULT_KAFKA_CERT = "kafka-service.cert"
 DEFAULT_KAFKA_KEY = "kafka-service.key"
 DEFAULT_KAFKA_TOPIC = "kwebmon"
+DEFAULT_SITES_LIST = "sites.json"
 
 KAFKA_CA_ENV_VAR = "KWEBMON_KAFKA_CA"
 KAFKA_CERT_ENV_VAR = "KWEBMON_KAFKA_CERT"
 KAFKA_KEY_ENV_VAR = "KWEBMON_KAFKA_KEY"
 KAFKA_URI_ENV_VAR = "KWEBMON_KAFKA_URI"
+SITES_LIST_URI_ENV_VAR = "KWEBMON_SITES_LIST"
 
 kafka_ca = os.environ.get(KAFKA_CA_ENV_VAR, DEFAULT_KAFKA_CA)
 kafka_cert = os.environ.get(KAFKA_CERT_ENV_VAR, DEFAULT_KAFKA_CERT)
@@ -90,8 +92,12 @@ def parse_args(args=sys.argv[1:]):
     parser.add_argument(
         "-s",
         "--sites-list",
-        required=True,
-        help="Configuration file (JSON) with a list of websites to monitor",
+        default=DEFAULT_SITES_LIST,
+        help=(
+            "Configuration file (JSON) with a list of websites to monitor. "
+            f"Overrides the environment variable {SITES_LIST_URI_ENV_VAR} "
+            f"(default: {DEFAULT_SITES_LIST})."
+        )
     )
     parsed_args = parser.parse_args(args)
 

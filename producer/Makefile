@@ -18,6 +18,10 @@ init: ## Initialize dev environment
 	pip install pipenv
 	pipenv install --dev
 
+.PHONY: run
+run: ## Run kwebmon_producer
+	pipenv run python -m kwebmon_producer
+
 .DEFAULT_GOAL := help
 
 .PHONY: help

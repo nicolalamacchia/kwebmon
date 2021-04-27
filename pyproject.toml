@@ -6,7 +6,7 @@ authors = [
 ]
 license = "MIT"
 readme = "README.md"
-python = "^3.8"
+python = "^3.9"
 homepage = "https://github.com/nicolalamacchia/kwebmon"
 repository = "https://github.com/nicolalamacchia/kwebmon"
 documentation = "https://github.com/nicolalamacchia/kwebmon"
@@ -20,4 +20,3 @@ classifiers = [
 
 [tool.black]
 line-length = 79
-

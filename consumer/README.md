@@ -99,4 +99,4 @@ variables and to change the database table name (`kwebmon_metrics` by
 default) and the Kafka topic (`kwebmon` by default) by using CLI arguments.
 
 For more details refer to
-[Detailed Usage Information](#detaild-usage-information)
+[Detailed Usage Information](#detailed-usage-information)

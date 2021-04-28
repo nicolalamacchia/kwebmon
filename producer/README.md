@@ -119,4 +119,4 @@ variables and change the check interval (5 seconds by default) and the Kafka
 topic (which is `kwebmon` by default) by using CLI arguments.
 
 For more details refer to
-[Detailed Usage Information](#detaild-usage-information)
+[Detailed Usage Information](#detailed-usage-information)

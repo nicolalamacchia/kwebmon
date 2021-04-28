@@ -1,0 +1,23 @@
+version: "3.9"
+
+services:
+  consumer:
+    build: consumer
+    container_name: kwebmon-consumer
+    environment:
+      KWEBMON_POSTGRES_URI: ${KWEBMON_POSTGRES_URI}
+      KWEBMON_KAFKA_URI: ${KWEBMON_KAFKA_URI}
+    volumes:
+      - ./dev/kafka-service.cert:/opt/kwebmon/consumer/kafka-service.cert
+      - ./dev/kafka-service.key:/opt/kwebmon/consumer/kafka-service.key
+      - ./dev/kafka-ca.pem:/opt/kwebmon/consumer/kafka-ca.pem
+  producer:
+    build: producer
+    container_name: kwebmon-producer
+    environment:
+      KWEBMON_KAFKA_URI: ${KWEBMON_KAFKA_URI}
+    volumes:
+      - ./dev/kafka-service.cert:/opt/kwebmon/producer/kafka-service.cert
+      - ./dev/kafka-service.key:/opt/kwebmon/producer/kafka-service.key
+      - ./dev/kafka-ca.pem:/opt/kwebmon/producer/kafka-ca.pem
+      - ./dev/sites.json:/opt/kwebmon/producer/sites.json

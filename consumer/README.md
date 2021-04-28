@@ -95,6 +95,12 @@ $ make run
 
 or execute it through `pipenv` as shown above.
 
+## Run Tests
+
+```sh
+$ make tests
+```
+
 ## Advanced Configuration
 
 It is possible to override the configuration provided by environment

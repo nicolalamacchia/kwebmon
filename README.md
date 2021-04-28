@@ -88,6 +88,12 @@ run:
 $ make run
 ```
 
+## Run Tests
+
+```sh
+$ make tests
+```
+
 ## Caveats
 
 kwebmon uses `psycopg2-binary` to connect to the PostgreSQL database.

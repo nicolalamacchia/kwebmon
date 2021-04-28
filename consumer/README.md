@@ -46,6 +46,9 @@ to provide a connection URI to the database. See _§ Connection Strings_
 [here](https://www.postgresql.org/docs/current/libpq-connect.html) for more
 details.
 
+In a production environment the connection URI should be passed by defining
+the `KWEBMON_POSTGRES_URI` environmen variable.
+
 The target database must be properly configured to allow writes on the
 specified target table.
 

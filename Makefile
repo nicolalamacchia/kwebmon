@@ -1,4 +1,4 @@
- CONSUMER = consumer
+CONSUMER = consumer
 PRODUCER = producer
 
 .PHONY: coverage

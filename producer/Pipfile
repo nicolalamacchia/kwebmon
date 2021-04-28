@@ -10,3 +10,4 @@ aiohttp = "*"
 
 [dev-packages]
 flake8 = "*"
+mypy = "*"

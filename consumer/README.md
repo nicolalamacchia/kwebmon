@@ -58,6 +58,13 @@ specified target table.
 
 * GNU Make;
 * Python 3.9;
+* a C compiler;
+* `libpq-dev` (or another similar library providing the `libpq` header files
+  and the `pg_config` executable);
+* Python header files.
+
+Refert to [Psycopg's documentation](https://www.psycopg.org/docs/install.html#build-prerequisites)
+for more information about the last three points.
 
 ### Prepare the Environment
 

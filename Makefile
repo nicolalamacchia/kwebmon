@@ -11,6 +11,11 @@ tests: ## Run tests
 	make -C $(CONSUMER) tests
 	make -C $(PRODUCER) tests
 
+.PHONY: check-types
+check-types: ## Run static type checking
+	make -C $(CONSUMER) check-types
+	make -C $(PRODUCER) check-types
+
 .PHONY: lint
 lint: ## Run the linter
 	make -C $(CONSUMER) lint

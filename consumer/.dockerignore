@@ -1,0 +1,7 @@
+**
+
+!Pipfile
+!Pipfile.lock
+!kwebmon_consumer/
+
+kwebmon_consumer/**/*.pyc

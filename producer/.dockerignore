@@ -1,0 +1,7 @@
+**
+
+!Pipfile
+!Pipfile.lock
+!kwebmon_producer/
+
+kwebmon_producer/**/*.pyc

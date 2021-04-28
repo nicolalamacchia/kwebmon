@@ -25,6 +25,9 @@ jobs:
       - name: Install dependencies
         run: |
           make init
+      - name: Check types with Mypy
+        run: |
+          make check-types
       - name: Lint with flake8
         run: |
           make lint

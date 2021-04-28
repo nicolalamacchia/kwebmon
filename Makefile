@@ -21,6 +21,10 @@ init: ## Initialize dev environment
 	make -C $(CONSUMER) init
 	make -C $(PRODUCER) init
 
+.PHONY: build
+build: ## Build Docker images
+	docker-compose build
+
 .PHONY: run
 run: ## Run locally
 	docker-compose up

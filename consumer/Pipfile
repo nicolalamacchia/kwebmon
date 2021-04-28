@@ -6,7 +6,7 @@ name = "pypi"
 [packages]
 kafka-python = "*"
 jsonschema = "*"
-psycopg2-binary = "*"
+psycopg2 = "*"
 
 [dev-packages]
 flake8 = "*"

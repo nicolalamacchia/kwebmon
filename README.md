@@ -57,8 +57,8 @@ containers.
 
 A system with installed:
 
-* Docker
-* Docker Compose
+* Docker;
+* Docker Compose.
 
 ### Setting Up the Environment
 
@@ -93,17 +93,6 @@ $ make run
 ```sh
 $ make tests
 ```
-
-## Caveats
-
-kwebmon uses `psycopg2-binary` to connect to the PostgreSQL database.
-[Psycopg's documentation](https://www.psycopg.org/docs/install.html#psycopg-vs-psycopg-binary)
-advices against the use of such package in production in favor of `psycopg2`,
-compiled from source.
-
-Keep this in mind if you plan to deploy kwebmon in a production environment.
-
-There might be a migration to `psycopg2` in the future.
 
 ## Useful Reading
 

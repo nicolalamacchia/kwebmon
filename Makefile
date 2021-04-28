@@ -21,6 +21,10 @@ init: ## Initialize dev environment
 	make -C $(CONSUMER) init
 	make -C $(PRODUCER) init
 
+.PHONY: run
+run: ## Run locally
+	docker-compose up
+
 .DEFAULT_GOAL := help
 
 .PHONY: help

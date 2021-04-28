@@ -1,4 +1,4 @@
-CONSUMER = consumer
+ CONSUMER = consumer
 PRODUCER = producer
 
 .PHONY: coverage
@@ -21,10 +21,32 @@ lint: ## Run the linter
 	make -C $(CONSUMER) lint
 	make -C $(PRODUCER) lint
 
+.PHONY: pydeps-dev
+pydeps-dev: ## Install Python dependencies (dev)
+	pipenv install --dev
+
+.PHONY: sysdeps
+sysdeps: ## Install system dependencies
+	pip install pipenv
+
+.PHONY: ci-init
+ci-init: ## Initialize CI environment
+	pip install --upgrade pip
+	make sysdeps
+	make -C $(CONSUMER) pydeps-ci
+	make -C $(PRODUCER) pydeps-ci
+
+.PHONY: ci
+ci: ## Run tests, linter and type checking
+	make -C $(CONSUMER) ci
+	make -C $(PRODUCER) ci
+
 .PHONY: init
 init: ## Initialize dev environment
-	make -C $(CONSUMER) init
-	make -C $(PRODUCER) init
+	make sysdeps
+	pipenv install --deploy --dev
+	make -C $(CONSUMER) pydeps-dev
+	make -C $(PRODUCER) pydeps-dev
 
 .PHONY: build
 build: ## Build Docker images

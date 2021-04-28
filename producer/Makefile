@@ -17,10 +17,34 @@ check-types: ## Run static type checking
 lint: ## Run the linter
 	pipenv run flake8 $(SOURCE)
 
+.PHONY: pydeps-dev
+pydeps-dev: ## Install Python dependencies (dev)
+	pipenv install --dev
+
+.PHONY: pydeps-ci
+pydeps-ci: ## Install Python dependencies (CI)
+	pipenv install --deploy --dev
+
+.PHONY: sysdeps
+sysdeps: ## Install system dependencies
+	pip install pipenv
+
+.PHONY: ci-init
+ci-init: ## Initialize CI environment
+	pip install --upgrade pip
+	make sysdeps
+	make pydeps-ci
+
+.PHONY: ci
+ci: ## Run linter, type checking and tests
+	make lint
+	make check-types
+	make tests
+
 .PHONY: init
 init: ## Initialize dev environment
-	pip install pipenv
-	pipenv install --dev
+	make sysdeps
+	make pydeps-dev
 
 .PHONY: run
 run: ## Run kwebmon_producer

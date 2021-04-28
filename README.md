@@ -48,6 +48,46 @@ $ make help
 
 for a list of available `make` targets.
 
+## Run Locally
+
+You can run both the producer and the consumer locally in separate Docker
+containers.
+
+### Prerequisites
+
+A system with installed:
+
+* Docker
+* Docker Compose
+
+### Setting Up the Environment
+
+Create a directory called `dev` at the root of the project. Put SSL and CA
+certificates for Kafka and the sites list configuration in the `dev` folder.
+
+Keep these file names for simplicity's sake:
+
+* `kafka-service.key`;
+* `kafka-service.cert`;
+* `kafka-ca.pem`;
+* `sites.json`.
+
+Refer to [kwebmon_producer](producer/README.md) for more details on the
+format of `sites.json`.
+
+Create a `.env` file with following content:
+
+```conf
+KWEBMON_KAFKA_URI=<your-kafka-connection-uri>
+KWEBMON_POSTGRES_URI=<your-postgres-connection-uri>
+```
+
+run:
+
+```sh
+$ make run
+```
+
 ## Caveats
 
 kwebmon uses `psycopg2-binary` to connect to the PostgreSQL database.

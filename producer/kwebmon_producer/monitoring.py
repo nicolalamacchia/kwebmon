@@ -19,7 +19,7 @@ class Monitor:
         response_callback: Callable[[dict, dict], Any]
     ) -> None:
         self._sites = self._compile_patterns(target_websites)
-        self._response_times = {}
+        self._response_times: dict[str, float] = {}
         self._response_callback = response_callback
 
     @staticmethod

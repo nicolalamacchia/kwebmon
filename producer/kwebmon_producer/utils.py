@@ -26,6 +26,7 @@ def _first_duplicate_url(sites: list[dict]) -> Optional[str]:
         url_b = site_b["url"]
         if url_a == url_b:
             return url_a
+    return None
 
 
 def get_sites(json_file: str) -> list[dict]:

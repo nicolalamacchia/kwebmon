@@ -9,6 +9,10 @@ coverage: ## Show tests coverage
 tests: ## Run tests
 	pipenv run python -m unittest discover -s tests
 
+.PHONY: check-types
+check-types: ## Run static type checking
+	pipenv run mypy $(SOURCE)
+
 .PHONY: lint
 lint: ## Run the linter
 	pipenv run flake8 $(SOURCE)
